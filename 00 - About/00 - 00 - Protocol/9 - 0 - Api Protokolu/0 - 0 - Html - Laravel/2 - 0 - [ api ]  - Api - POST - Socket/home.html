@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Api | Home </title>
+
+    <!---- Jquery dosyası çekme--->
+    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+
+    <h1>  Home Sayfası </h1>
+    
+     <div class="home">
+         <div class="leftPanel">
+            <div style="width: 175px;  display: flex ; gap : 5px; border: 1px solid black; padding: 2px; margin-bottom: 5px; " > 
+                <div id="connectStatus"  class="connectStatus">  DisConnect  </div>
+                <div id="connectCount" >  0  </div>
+            </div>
+    
+            <div class="apiButtonPanel">
+                <div class="apiButtonPanelText" >   <p> Kime: </p>   <input type="text" class="table" id="ToUserTokenPost" >  </div>
+                <div class="apiButtonPanelText" >   <p> Message: </p>   <input type="text" class="table" id="MessagePost" > </div>
+    
+                <div class="apiButtonPanelButton" > <button type="submit" title="Gonder	" id="sendPost"> Mesaj Gönder </button>  </div>
+            </div>
+        
+            
+            <div class="apiPanel">
+                <div class="apiPanelText" >   <p style="font-weight: 900 ; color: red; "> Api Paneli </p> </div>
+                <div class="apiPanelText" >   <p> Title: </p>  <p id="apiSonucTitle"> Sonuc </p>  </div>
+                <div class="apiPanelText" >   <p> Status: </p>   <p id="apiSonucStatus"> Sonuc </p>  </div>
+            </div>
+         </div>
+
+
+        <div class="userTable"> User Table </div>
+    </div>
+
+
+   
+
+</body>
+
+</html>
+
+<!------  script   -->
+<script type="text/javascript">
+
+
+    var userIdLocal = JSON.parse(localStorage.getItem('userId')); //! Veri Çekme
+    const socket = new WebSocket('ws://localhost:3002/socket/'+userIdLocal);  // Url
+
+    /* Başlangıc */
+    socket.onopen = function () {
+
+        const jsonVeri = JSON.stringify({
+            toAll:true,
+            toUserId:null,
+            dataType: "Time",
+            dataTypeTitle: "time_add_successful",
+            dataTypeDescription: "Zaman Görüntüleme Login",
+            dataId: 0,
+            data:null,
+            pageTable:"home",
+            pageToken: "homeToken"
+        })
+
+        socket.send(jsonVeri);   
+    };
+    /* Başlangıc Son*/
+
+    //! Gelen Bildirim
+    socket.addEventListener('message', function (event) {
+        console.log('Message from server ', event.data);
+
+        //! Veri Alma
+        let geleData = event.data;
+        const obj = JSON.parse(geleData);
+        const objDataType = obj.dataType; // "Connect" - 
+        const objDataTypeDescription = obj.dataTypeDescription; // "Connected"
+        const objConnectCount = obj.count; // 2
+        const objToAll = obj.toAll; // 1
+        const objFromUserID = obj.fromUserID; // 1
+        const objToUserID = obj.toUserID; // 12
+        const objData = obj.data; // 12
+        let objMesajType = "-"; // send | incoming
+
+        // Bağlantı Bilgileri
+        if(obj.dataType == "Connect" && objFromUserID == userIdLocal ) { document.getElementById("connectStatus").innerText = obj.dataTypeDescription; document.querySelector('.connectStatus').classList.toggle('active'); /* active class ekliyor */  }
+        if(obj.dataType == "Connect") { document.getElementById("connectCount").innerText = objConnectCount;   }
+            // Bağlantı Bilgileri Son
+
+            //***** Mesaj Bilgileri *****
+
+            //! Gönderildi Mesaj
+            if(obj.dataType == "Message" && obj.dataTypeTitle == "mesaj_send_successful" && obj.fromUserID == userIdLocal ) { alert("mesaj gönderildi"); }
+
+            //! Gelen Mesaj
+            if(obj.dataType == "Message" && obj.dataTypeTitle == "mesaj_send_successful") { 
+                if(obj.toAll==true && obj.fromUserID != userIdLocal) { alert("Herkese mesaj geldi"); }
+                if(obj.toAll==false && obj.toUserID == userIdLocal ) { alert("Özel mesaj geldi"); }
+            }
+            //***** Mesaj Bilgileri Son *****
+
+    });
+    //! Gelen Bildirim Son     
+
+    /* Ajax */
+    $('document').ready(function () {
+
+        //Gönderme
+        $('#sendPost').click(function () {
+
+            //! ---- Gönderilen Veriler --------
+            var postData = {
+                FromUserToken: JSON.parse(localStorage.getItem('userToken')),
+                ToUserToken: $('#ToUserTokenPost').val(),
+                Subject: "Subject",
+                Message: $('#MessagePost').val(),
+                Created_byToken: JSON.parse(localStorage.getItem('userToken'))
+            }
+            //! ---- Son  Gönderilen Veriler --------
+
+            //! **** Ajax ***********
+            $.ajax({
+                url: "http://localhost:3002/api/message/add",
+                type: "POST",
+                data: postData,
+                success: function (response) {
+                    //! Console
+                    console.log("Api:",response);
+                    //console.log("DB:",response.DB);
+                    //console.log("title:",response.title);
+                    
+
+                    //! Html
+                    $('#apiSonucTitle').html(response.title);
+                    $('#apiSonucStatus').html(response.status);
+
+                    //! Socket Bildirim Gönder
+                    const jsonVeri = JSON.stringify({
+                        toAll:false,
+                        toUserId:  $('#ToUserTokenPost').val(),
+                        dataType: "Message",
+                        dataTypeTitle: "mesaj_send_successful",
+                        dataTypeDescription:"Mesaj Gönderme Başarılı",
+                        dataId: 0,
+                        data: $('#MessagePost').val(),
+                        pageTable:"home",
+                        pageToken: "homeToken"
+                    })
+
+                    socket.send(jsonVeri);    
+
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            })
+            //! **** Ajax Son *********
+
+        }); //Gönderme son
+
+    });
+    /* Ajax Son */
+
+</script>
+<!------  End script   -->
+
+
+<!------  Css   -->
+<style>
+
+    .home {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        padding-left: 15px;
+    }
+
+    .connectStatus { color: red;}
+    .connectStatus.active { color: green; }
+    .connectCount { 
+        color: black;
+        font-size: 15px;
+        font-weight: 900;
+    }
+ 
+    .apiButtonPanel {
+       display: flex;
+       width: 450px;
+       flex-direction: column;
+       justify-content: space-between;
+       border: 1px solid black;
+       padding: 4px;
+       margin-bottom: 20px;
+       height: 140px;
+       border-radius: 14px;
+    }
+
+    .apiButtonPanelText {
+       display: flex;
+       width: 100%;
+       flex-direction: row;
+       gap: 5px;
+       padding-right: 6px;
+       align-items: center;
+       margin-bottom: -19px;
+    }
+
+    .table {
+        width: 100%;
+        height: 14px;
+        margin-right: 10px;
+    }
+
+    .apiButtonPanelButton {
+        margin-right: 10px;
+    }
+
+    #sendPost {
+       background-color: green;
+       color: aliceblue;
+       width: 100%;
+       margin-bottom: 5px;
+       margin-top: 15px;
+       margin-right: 10px;
+    }
+      
+    .apiPanel {
+       display: flex;
+       width: 450px;
+       flex-direction: column;
+       border: 1px solid black;
+       padding: 4px;
+       border-radius: 14px;
+    }
+   
+    .apiPanelText {
+       display: flex;
+       flex-direction: row;
+       gap: 5px;
+    }
+
+    .userTable {
+        width: 100px;
+        height: 100px;
+        background-color: blue;
+        margin-right: 25px;
+    }
+   
+</style>
+<!------  End Css   -->

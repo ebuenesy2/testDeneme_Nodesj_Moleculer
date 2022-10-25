@@ -1,0 +1,32 @@
+[
+	{
+		"dataType": "Connect",
+		"dataTypeTitle": "Connected",
+		"dataTypeDescription": "Bir Kullanıcı Bağlandı"
+	},
+	{
+		"dataType": "Connect",
+		"dataTypeTitle": "disConnect",
+		"dataTypeDescription": "Bir Kullanıcı Çıkış Yaptı"
+	},
+	{
+		"dataType": "Time",
+		"dataTypeTitle": "time_add_successful",
+		"dataTypeDescription": "Zaman Görüntüleme Başladı"
+	},
+	{
+		"dataType": "page",
+		"dataTypeTitle": "pageRefresh",
+		"dataTypeDescription": " [pageTable] [pageToken]  Sayfa Yenile"
+	},
+	{
+		"dataType": "mesaj",
+		"dataTypeTitle": "mesaj_send_successful",
+		"dataTypeDescription": "Mesaj Gönderme Başarılı"
+	},
+	{
+		"dataType": "Like",
+		"dataTypeTitle": "liked",
+		"dataTypeDescription": "Gönderi Beğenildi"
+	}
+]

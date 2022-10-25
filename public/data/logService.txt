@@ -1,0 +1,16 @@
+	            
+                //! ----------- Log ----------------------------- 	
+				let logs_add = await ctx.call('logs.add', {
+					table: "time",
+					title: "time_delete_successful",
+					description: "Time Geçisi Silme Başarılı",
+					logStatus: "success",
+					fromToken: dbFind["token"],
+					created_byToken: ctx.params.deleted_byToken
+				})
+
+				if (logs_add.status == "1") { console.log('\u001b[' + 32 + 'm' + '[Time] [Logs] [Delete_Updated] Bildirim Eklendi' + '\u001b[0m'); }
+				if (logs_add.status == "0") { console.log('\u001b[' + 31 + 'm' + '[Time] [Logs] [Delete_Updated] Bildirim Eklenemedi' + '\u001b[0m'); }
+
+				//! ----------- Log Son -----------------------------
+				

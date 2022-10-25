@@ -1,0 +1,38 @@
+[
+	{
+		"id": 0,
+		"serverId": 0,
+		"serverToken": "serverToken",
+		"title": "title",
+		"priorityToken": "priorityToken",
+		"statusToken": "statusToken",
+		"token": "token",
+		"created_at": "2022-10-21T10:00:38+03:00",
+		"created_byToken": null,
+		"updated_at": null,
+		"updated_byToken": null,
+		"isUpdated": true,
+		"isActive": true,
+		"isDeleted": false,
+		"deleted_at": null,
+		"deleted_byToken": null
+	},
+	{
+		"id": 1,
+		"serverId": 0,
+		"serverToken": "serverToken",
+		"title": "Hata var",
+		"priorityToken": "token",
+		"statusToken": "token",
+		"token": "token1",
+		"created_at": "2022-10-21T10:00:38+03:00",
+		"created_byToken": "token",
+		"updated_at": null,
+		"updated_byToken": null,
+		"isUpdated": true,
+		"isActive": true,
+		"isDeleted": false,
+		"deleted_at": null,
+		"deleted_byToken": null
+	}
+]

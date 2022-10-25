@@ -1,0 +1,36 @@
+[
+	{
+		"id": 1,
+		"serverId": 0,
+		"serverToken": "serverToken",
+		"soru": "soru 1",
+		"cevap": "cevap 1",
+		"token": "token",
+		"created_at": "2022-03-06T13:14:43.211Z",
+		"created_byToken": "created_byToken",
+		"isUpdated": false,
+		"updated_at": "2022-03-06T13:14:43.211Z",
+		"updated_byToken": "updated_byToken",
+		"isActive": true,
+		"isDeleted": false,
+		"deleted_at": "2022-03-06T13:14:43.211Z",
+		"deleted_byToken": "isDeleted_byToken"
+	},
+	{
+		"id": 2,
+		"serverId": 0,
+		"serverToken": "serverToken",
+		"soru": "soru 2",
+		"cevap": "cevap 2",
+		"token": "token2",
+		"created_at": "2022-03-06T13:14:43.211Z",
+		"created_byToken": "created_byToken",
+		"isUpdated": false,
+		"updated_at": "2022-03-06T13:14:43.211Z",
+		"updated_byToken": "updated_byToken",
+		"isActive": true,
+		"isDeleted": false,
+		"deleted_at": "2022-03-06T13:14:43.211Z",
+		"deleted_byToken": "isDeleted_byToken"
+	}
+]

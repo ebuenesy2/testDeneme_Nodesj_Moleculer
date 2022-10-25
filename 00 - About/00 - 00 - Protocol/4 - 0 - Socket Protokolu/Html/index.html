@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajax Dersleri  | Socket </title>
+
+    <!---- Jquery dosyası çekme--->
+    <script type="text/javascript" src="js/jquery-3.6.0.min.js"></script>
+  
+</head>
+<body>
+
+    <div style=" display: flex; gap: 10px; margin-top: 10px; margin-left: 10px; ">
+        <div style="width: 180px ;height: 18px ;border: 1px solid; display: flex; gap: 3px; padding: 10px;">USERID:<div id="connectUserId">0</div></div>
+        <div style="width: 180px ;height: 18px ;border: 1px solid; display: flex; gap: 3px; padding: 10px;">Bağlan Kişi Sayısı:<div id="connectCount">0</div></div>
+        <button id="btn_view"> Socket </button> <br> <br>
+        <div id="connectStatus" style="display: flex; margin-top: auto; margin-bottom: auto; " >sonuc</div>
+    </div>
+
+</body>
+</html>
+
+<!------  script   -->
+<script  type="text/javascript" >
+
+const userId= new Date().getTime();
+const socket = new WebSocket('ws://localhost:3002/socket/'+userId);  // Url
+document.getElementById("connectUserId").innerText = userId;
+
+//! Gelen Bildirim
+socket.addEventListener('message', function (event) {
+    //
+    console.log('Message from server ', event.data);
+    console.log(JSON.parse(event.data));
+
+    //! Veri Alma
+    let gelenData = event.data;
+    const obj = JSON.parse(gelenData);
+    const objDataType = obj.dataType; // "Connect" - 
+    const objDataTypeDescription = obj.dataTypeDescription; // "Connected"
+    const objConnectCount = obj.count; // 2
+    const objToAll = obj.toAll; // 1
+    const objFromUserID = obj.fromUserID; // 1
+    const objToUserID = obj.toUserID; // 12
+    const objData = obj.data; // 12
+    let objMesajType = "-"; // send | incoming
+
+    // Bağlantı Bilgileri
+    if(obj.dataType == "Connect" && objFromUserID == userId ) { document.getElementById("connectStatus").innerText = obj.dataTypeDescription; }
+    if(obj.dataType == "Connect") { document.getElementById("connectCount").innerText = obj.count; }
+        // Bağlantı Bilgileri Son
+
+});
+//! Gelen Bildirim Son
+
+
+//Tıklama
+$('#btn_view').click(function(){
+
+    alert("tiklama");
+    
+
+     const jsonVeri = JSON.stringify({
+             toAll:true,
+             toUserId:null,
+             dataType: "Time",
+             dataTypeTitle: "time_add_successful",
+             dataTypeDescription: "Zaman Görüntüleme Başladı",
+             dataId: 0,
+             data:null,
+             pageTable:"home",
+             pageToken: "homeToken"
+        })
+
+         socket.send(jsonVeri);   
+
+   
+});
+
+</script>
+<!------  End script   -->

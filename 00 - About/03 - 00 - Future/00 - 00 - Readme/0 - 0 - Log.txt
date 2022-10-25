@@ -1,0 +1,5 @@
+
+
+* Blog Ekleme Başarılı : blogs_add_successful
+* Blog Güncelleme Başarılı : blogs_update_successful
+* Blog Silme Başarılı : blogs_delete_successful
