@@ -9,10 +9,10 @@ const nodemailer = require('nodemailer'); //! Mail
 
 /************* Mail *********** */
 let transporter = nodemailer.createTransport({
-    host: 'smtp.yandex.com.tr',
-    port: 465,
+    host: 'smtp.office365.com',
+	port: 587,
     auth: {
-        user: "ebuenesdeneme@yandex.com",
+        user: "ebuenesdeneme@hotmail.com",
         pass: "2622147enesDeneme"
     }
 });
@@ -40,7 +40,8 @@ module.exports = {
 	        try {
 				
 				if (user) {
-						let newPassword = "deneme123";			
+					let newPassword = "deneme123";		
+					
 						let mailOptions = {
 							from: 'ebuenesdeneme@yandex.com',
 							to: ctx.params.email,
@@ -52,7 +53,7 @@ module.exports = {
 							if (error) {
 								throw ({ code: 404, message: "Şifre sıfırlanırken bir hata oluştu." })
 							} else {
-										//   mail gönderim sonrasında işlem varsa burda yap
+								// mail gönderim sonrasında işlem varsa burda yap
 							}
 						});
 
