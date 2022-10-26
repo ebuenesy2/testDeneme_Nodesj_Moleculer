@@ -9,7 +9,7 @@ const nodemailer = require('nodemailer'); //! Mail
 
 /************* Mail *********** */
 let transporter = nodemailer.createTransport({
-    host: 'smtp.yandex.com.tr',
+    host: 'smtp.gmail.com',
     port: 465,
     auth: {
         user: "ebuenesdeneme@gmail.com",
