@@ -19,8 +19,8 @@ let transporter = nodemailer.createTransport({
 
 transporter.verify(function (error, success) {
 
-  if (error) { console.log("Baglantı Hatası:",error); }
-  else { console.log('Bağlantı başarıyla sağlandı:',success); }
+  if (error) { console.log('\u001b[' + 31 + 'm' + 'Eposta Bağlantı Hatası:'+error + '\u001b[0m'); }
+  else { console.log('\u001b[' + 32 + 'm' + 'Eposta Bağlantı Başarılı Oldu:'+success + '\u001b[0m'); }
 
 });
 /************* Mail Son *********** */
