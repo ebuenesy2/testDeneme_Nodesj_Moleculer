@@ -10,10 +10,10 @@ const nodemailer = require('nodemailer'); //! Mail
 /************* Mail *********** */
 let transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
-	port: 465,
+	port: 587,
     auth: {
         user: "ebuenesdeneme@gmail.com",
-        pass: "2622147enesDeneme"
+        pass: "vyfyhlwvmmwdubbw"
     }
 });
 
