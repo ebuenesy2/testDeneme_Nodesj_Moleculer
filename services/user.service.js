@@ -9,14 +9,21 @@ const nodemailer = require('nodemailer'); //! Mail
 
 /************* Mail *********** */
 let transporter = nodemailer.createTransport({
-    host: 'smtp.yandex.com.tr',
-    port: 465,
+    service:'gmail',
     auth: {
-        user: "ebuenesy2@gmail.com",
-        pass: "xxx"
+        user: "ebuenesdeneme@gmail.com",
+        pass: "2622147enesDeneme"
     }
 })
+
+transporter.verify(function (error, success) {
+
+  if (error) { console.log("Baglantı Hatası:",error); }
+  else { console.log('Bağlantı başarıyla sağlandı'); }
+
+});
 /************* Mail Son *********** */
+
 
 
 module.exports = {
@@ -26,6 +33,8 @@ module.exports = {
 		
 		async forgotPassword(ctx) {
 			let user = db.find(u => u.email == ctx.params.email);
+
+			console.log("userForget burda");
 			
 	        try {
 				
