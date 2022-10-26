@@ -9,7 +9,8 @@ const nodemailer = require('nodemailer'); //! Mail
 
 /************* Mail *********** */
 let transporter = nodemailer.createTransport({
-    service:'gmail',
+    host: 'smtp.yandex.com.tr',
+    port: 465,
     auth: {
         user: "ebuenesdeneme@gmail.com",
         pass: "2622147enesDeneme"
