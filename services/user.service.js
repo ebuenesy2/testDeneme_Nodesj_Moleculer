@@ -9,18 +9,18 @@ const nodemailer = require('nodemailer'); //! Mail
 
 /************* Mail *********** */
 let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
+    host: 'smtp.yandex.com.tr',
     port: 465,
     auth: {
-        user: "ebuenesdeneme@gmail.com",
+        user: "ebuenesdeneme@yandex.com",
         pass: "2622147enesDeneme"
     }
-})
+});
 
 transporter.verify(function (error, success) {
 
   if (error) { console.log("Baglantı Hatası:",error); }
-  else { console.log('Bağlantı başarıyla sağlandı'); }
+  else { console.log('Bağlantı başarıyla sağlandı:',success); }
 
 });
 /************* Mail Son *********** */
@@ -42,7 +42,7 @@ module.exports = {
 				if (user) {
 						let newPassword = "deneme123";			
 						let mailOptions = {
-							from: 'ebuenesy2@gmail.com',
+							from: 'ebuenesdeneme@yandex.com',
 							to: ctx.params.email,
 							subject: 'Şifre Yenileme',
 							text: 'Merhaba ' + 'İyi Günler Dileriz.',
@@ -57,7 +57,7 @@ module.exports = {
 						});
 
 						ctx.params.status = "success"
-						ctx.params.user = user
+						ctx.params.message = "mesaj gönderildi"
 
 						return ctx.params
 						
