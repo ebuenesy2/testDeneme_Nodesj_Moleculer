@@ -9,10 +9,10 @@ const nodemailer = require('nodemailer'); //! Mail
 
 /************* Mail *********** */
 let transporter = nodemailer.createTransport({
-    host: 'smtp.office365.com',
-	port: 587,
+    host: 'smtp.gmail.com',
+	port: 465,
     auth: {
-        user: "ebuenesdeneme@hotmail.com",
+        user: "ebuenesdeneme@gmail.com",
         pass: "2622147enesDeneme"
     }
 });
@@ -42,25 +42,33 @@ module.exports = {
 				if (user) {
 					let newPassword = "deneme123";		
 					
-						let mailOptions = {
-							from: 'ebuenesdeneme@yandex.com',
-							to: ctx.params.email,
-							subject: 'Şifre Yenileme',
-							text: 'Merhaba ' + 'İyi Günler Dileriz.',
-						};
+					let mailOptions = {
+						from: 'ebuenesdeneme@gmail.com',
+						to: ctx.params.email,
+						subject: 'Şifre Yenileme',
+						text: 'Merhaba ' + 'İyi Günler Dileriz.',
+					};
 
-						transporter.sendMail(mailOptions, async (error) => {
-							if (error) {
-								throw ({ code: 404, message: "Şifre sıfırlanırken bir hata oluştu." })
-							} else {
-								// mail gönderim sonrasında işlem varsa burda yap
-							}
-						});
+					//! Return
+					let status = "success";		
+					let message = "message";
 
-						ctx.params.status = "success"
-						ctx.params.message = "mesaj gönderildi"
+					transporter.sendMail(mailOptions, async (error) => {
+						if (error) {
+							console.log("error:", error);
+							status = "error";
+							message = error;
+						} else {
+							// mail gönderim sonrasında işlem varsa burda yap
+							status = "success";
+							message = "mesaj gönderildi";
+						}
+					});
 
-						return ctx.params
+					ctx.params.status = status;
+					ctx.params.message = message;
+
+					return ctx.params
 						
 				}
 				else
