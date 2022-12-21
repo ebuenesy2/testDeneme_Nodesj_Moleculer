@@ -7,23 +7,6 @@ const db = require('../public/DB/user.json'); //! Json
 
 const nodemailer = require('nodemailer'); //! Mail
 
-/************* Mail *********** */
-let transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-	port: 587,
-    auth: {
-        user: "ebuenesdeneme@gmail.com",
-        pass: "vyfyhlwvmmwdubbw"
-    }
-});
-
-transporter.verify(function (error, success) {
-
-  if (error) { console.log('\u001b[' + 31 + 'm' + 'Eposta Bağlantı Hatası:'+error + '\u001b[0m'); }
-  else { console.log('\u001b[' + 32 + 'm' + 'Eposta Bağlantı Başarılı Oldu:'+success + '\u001b[0m'); }
-
-});
-/************* Mail Son *********** */
 
 
 
@@ -32,56 +15,38 @@ module.exports = {
 
 	actions: {
 		
-		async forgotPassword(ctx) {
-			let user = db.find(u => u.email == ctx.params.email);
+		async info(ctx) {
+		
+			//! Return Api
+			ctx.params.title = "user.service -> Info"
+			ctx.params.table = "user.json"
+			ctx.params.time = dayjs().toDate()
+			ctx.params.note = ""
+			ctx.params.APi_URL = process.env.APi_URL
 
-			console.log("userForget burda");
+			return ctx.params
+
+		},
+		async post(ctx) {
+
+			//! Return Api
+			ctx.params.createdAt = dayjs().toDate();
+			delete ctx.params.createdAt;
+
+			return ctx.params
+		},
+		async html(ctx) {
+		
+			ctx.meta.$responseType = "text/html";
+			return Buffer.from(`
+                    <html>
+                    <body>
+                        <h1>Hello API ebu enes!</h1>
+                        <img src="/api/file.image" />
+                    </body>
+                    </html>
+            `);
 			
-	        try {
-				
-				if (user) {
-					let newPassword = "deneme123";		
-					
-					let mailOptions = {
-						from: 'ebuenesdeneme@gmail.com',
-						to: ctx.params.email,
-						subject: 'Şifre Yenileme',
-						text: 'Merhaba ' + 'İyi Günler Dileriz.',
-					};
-
-					//! Return
-					let status = "success";		
-					let message = "message";
-
-					transporter.sendMail(mailOptions, async (error) => {
-						if (error) {
-							console.log("error:", error);
-							status = "error";
-							message = error;
-						} else {
-							// mail gönderim sonrasında işlem varsa burda yap
-							status = "success";
-							message = "mesaj gönderildi";
-						}
-					});
-
-					ctx.params.status = status;
-					ctx.params.message = message;
-
-					return ctx.params
-						
-				}
-				else
-					throw ({ code: 404, message: "Kullanıcı Bulunamadı" })
-
-			} catch (error) {
-				
-				ctx.params.status = "error"
-				ctx.params.error = error
-				
-				return ctx.params
-
-			}
 		}
 	}
 }

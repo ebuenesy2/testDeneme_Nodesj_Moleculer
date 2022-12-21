@@ -486,32 +486,7 @@ module.exports = {
 			fastify.get('/api/user/html',async (req,res)=> this.broker.call("user.html")) //! Html
 			fastify.get('/api/user/all', async (req, res) => this.broker.call("user.all")) //! All		
 
-			fastify.get('/api/user/:id', async (req, res) => this.broker.call("user.find",{id: req.params.id})) //! Search
-			fastify.post('/api/user/find_post', async	 (req, res) => this.broker.call("user.find_post",{...req.body})) //!  Search-Post
-			fastify.post('/api/user/find_token', async (req, res) => this.broker.call("user.find_token",{...req.body})) //!  Search-Token
-			fastify.post('/api/user/find_country', async (req, res) => this.broker.call("user.find_country",{...req.body})) //!  Search-Country
-			fastify.post('/api/user/find_gender', async (req, res) => this.broker.call("user.find_gender",{...req.body})) //!  Search-Gender
-			fastify.post('/api/user/find_dateofBirth', async (req, res) => this.broker.call("user.find_dateofBirth", { ...req.body })) //!  Search-DateofBirth
-			
-			fastify.post('/api/user/find_serverToken', async (req, res) => this.broker.call("user.find_serverToken",{...req.body})) //! Search - FromServerToken	
-			fastify.post('/api/user/find_serverId', async (req, res) => this.broker.call("user.find_serverId",{...req.body})) //! Search - FromServerId
-			fastify.post('/api/user/find_adminCheck', async (req, res) => this.broker.call("user.find_adminCheck",{...req.body})) //! Search - AdminCheck
-			fastify.post('/api/user/find_userRole', async (req, res) => this.broker.call("user.find_userRole",{...req.body})) //! Search - UserRole
-			fastify.post('/api/user/find_userType', async (req, res) => this.broker.call("user.find_userType",{...req.body})) //! Search - UserType
-
-			fastify.post('/api/user/add', async (req, res) => this.broker.call("user.add",{...req.body})) //! CREATE
-			fastify.post('/api/user/update', async (req, res) => this.broker.call("user.update",{...req.body})) //! UPDATE
-			fastify.post('/api/user/updateUrl', async (req, res) => this.broker.call("user.updateUrl",{...req.body})) //! UPDATE - URL
-			fastify.post('/api/user/updatePassword', async (req, res) => this.broker.call("user.updatePassword",{...req.body})) //! UPDATE - Password
-			fastify.post('/api/user/delete/:id', async (req, res) => this.broker.call("user.delete", { id: req.params.id, ...req.body })) //! DELETE
-			fastify.post('/api/user/delete_update/:id', async (req, res) => this.broker.call("user.delete_update",{id: req.params.id,...req.body})) //! DELETED Update
-			
-			fastify.post('/api/user/loginOnline', async (req, res) => this.broker.call("user.loginOnline",{...req.body})) //! Login
-			fastify.post('/api/user/loginOnlineUsername', async (req, res) => this.broker.call("user.loginOnlineUsername",{...req.body})) //! Login User
-			fastify.post('/api/user/loginOut', async (req, res) => this.broker.call("user.loginOut",{...req.body})) //! Loginout
-			fastify.post('/api/user/view/:id', async (req, res) => this.broker.call("user.view", { id: req.params.id, ...req.body })) //!Search - View
-			
-			fastify.post('/api/user/forgotPassword', async (req, res) => this.broker.call("user.forgotPassword",{id: req.params.id,...req.body})) //!Search - forgotPassword
+		
 
 		//!---------------- User son ----------------------------------------------------------------------------------------------
 
